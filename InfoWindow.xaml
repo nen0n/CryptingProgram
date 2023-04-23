@@ -1,0 +1,24 @@
+﻿<Window x:Class="CryptingProgram.InfoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CryptingProgram"
+        mc:Ignorable="d"
+        Title="Справка" Height="184.8" Width="350">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="31*"/>
+            <ColumnDefinition Width="141*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock x:Name ="InfoBlock" HorizontalAlignment="Center" Margin="10,10,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="135" Width="324" FontSize="20" TextAlignment="Center" Visibility="Visible" Grid.ColumnSpan="2">
+            <Run Text="Розробник"/>  
+            <LineBreak/>
+            <Run Text="Студентка 2-го курсу"/>  
+            <LineBreak/>
+            <Run Text="Групи ТР-12"/>
+            <LineBreak/>
+            <Run Text="Ангеліна Забловська"/>
+        </TextBlock>
+    </Grid>
+</Window>
