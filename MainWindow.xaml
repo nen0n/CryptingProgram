@@ -22,10 +22,10 @@
         <TextBox Name="OneLineKey_Encrypt" HorizontalAlignment="Left" Height="23" Margin="274,210,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="127" Background="Black" Foreground="White" FontFamily="Courier New" FontSize="14" />
         <ComboBox Name="Type_of_crypt" HorizontalAlignment="Left" Margin="75,0,0,0" VerticalAlignment="Top" Width="193" Height="22" SelectedIndex="0" Background="Black" FontFamily="Courier New" FontSize="14">
             <ComboBoxItem Content="Type of crypt"/>
-            <ComboBoxItem Content="Caesar crypt"/>
-            <ComboBoxItem Content="Tritemius Linear crypt"/>
-            <ComboBoxItem Content="Tritemius Nonlinear crypt"/>
-            <ComboBoxItem Content="Tritemius Slogan crypt"/>
+            <ComboBoxItem Content="Crypt of Caesar"/>
+            <ComboBoxItem Content="Crypt of Tritemius Linear"/>
+            <ComboBoxItem Content="Crypt of Tritemius Nonlinear"/>
+            <ComboBoxItem Content="Crypt of Tritemius Slogan"/>
             <ComboBoxItem Content="XOR crypt"/>
         </ComboBox>
         <Button Name ="Random_Key_Encrypt" Content="Random key" HorizontalAlignment="Left" Margin="10,210,0,0" VerticalAlignment="Top" Width="193" Height="23" Click="Random_Key_Encrypt_Click" Background="Black" Foreground="White" FontFamily="Courier New" FontSize="14"/>
