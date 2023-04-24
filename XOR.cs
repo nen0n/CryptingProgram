@@ -18,19 +18,12 @@ namespace CryptingProgram
             byte[] byteKey = Encoding.Unicode.GetBytes(gamma);
             byte[] inputBytes = Encoding.Unicode.GetBytes(plainText);
             string output;
-            try
-            {
-                for (int i = 0; i < inputBytes.Length; i++)
-                {
-                    inputBytes[i] ^= byteKey[i % byteKey.Length]; // XOR оператор
-                }
-                output = Encoding.Unicode.GetString(inputBytes);
-            }
-            catch
-            {
-                output = "";
-            }
 
+            for (int i = 0; i < inputBytes.Length; i++)
+            {
+                inputBytes[i] ^= byteKey[i % byteKey.Length]; // XOR оператор
+            }
+            output = Encoding.Unicode.GetString(inputBytes);
             return output;
         }
     }
