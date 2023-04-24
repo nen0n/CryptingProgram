@@ -26,12 +26,11 @@ namespace CryptingProgram
         public string selectedOutputPath;
         private string pattern_only_two_numbers = @"^(-?\d+,-?\d+)$";
         private string patternoOnlyThreeNumbers = @"^(-?\d+,-?\d+,-?\d+)$";
-        private int theme = 0;
-        Caesar caesar = new Caesar();
-        TritemiusLinear tritemiusLinear = new TritemiusLinear();
-        TritemiusNonlinear tritemiusNonlinear = new TritemiusNonlinear();
-        TritemiusSlogan tritemiusSlogan = new TritemiusSlogan();
-        XOR xor = new XOR();
+        private Caesar caesar = new Caesar();
+        private TritemiusLinear tritemiusLinear = new TritemiusLinear();
+        private TritemiusNonlinear tritemiusNonlinear = new TritemiusNonlinear();
+        private TritemiusSlogan tritemiusSlogan = new TritemiusSlogan();
+        private XOR xor = new XOR();
         public MainWindow()
         {
             InitializeComponent();
@@ -47,32 +46,32 @@ namespace CryptingProgram
         {
             if (Type_of_crypt.SelectedIndex == 0)
             {
-                MessageBox.Show("Не вибрано тип шифрування.");
+                MessageBox.Show("No encryption type selected.");
                 return false;
             }
             if (OneLineKey_Encrypt.Text == "")
             {
-                MessageBox.Show("Не введено ключа для шифрування.");
+                MessageBox.Show("No encryption key entered.");
                 return false;
             }
             if (Encrypt_Text.Text == "")
             {
-                MessageBox.Show("Не введено тексту для шифрування.");
+                MessageBox.Show("No encryption text entered.");
                 return false;
             }
             if(Type_of_crypt.SelectedIndex == 1 && !int.TryParse(OneLineKey_Encrypt.Text, out int result))
             {
-                MessageBox.Show("Ключ для шифрування введено не правильно. Потрібно ввести число.");
+                MessageBox.Show("The encryption key was entered incorrectly. You need to enter a number.");
                 return false;
             }
             if(Type_of_crypt.SelectedIndex == 2 && !Regex.IsMatch(OneLineKey_Encrypt.Text, pattern_only_two_numbers))
             {
-                MessageBox.Show("Ключ для шифрування введено не правильно. Потрібно ввести числа через кому. (1,2)");
+                MessageBox.Show("The encryption key was entered incorrectly. You need to enter numbers separated by commas. (1,2)");
                 return false;
             }
             if (Type_of_crypt.SelectedIndex == 3 && !Regex.IsMatch(OneLineKey_Encrypt.Text, patternoOnlyThreeNumbers))
             {
-                MessageBox.Show("Ключ для шифрування введено не правильно. Потрібно ввести числа через кому. (1,2,3)");
+                MessageBox.Show("The encryption key was entered incorrectly. You need to enter numbers separated by commas. (1,2,3)");
                 return false;
             }
             return true;
@@ -82,32 +81,32 @@ namespace CryptingProgram
         {
             if (Type_of_crypt.SelectedIndex == 0)
             {
-                MessageBox.Show("Не вибрано тип шифрування.");
+                MessageBox.Show("No encryption type selected.");
                 return false;
             }
             if (OneLineKey_Decrypt.Text == "")
             {
-                MessageBox.Show("Не введено ключа для розшифрування.");
+                MessageBox.Show("No encryption key entered.");
                 return false;
             }
             if (Decrypt_Text.Text == "")
             {
-                MessageBox.Show("Не введено тексту для розшифрування.");
+                MessageBox.Show("The encryption key was entered incorrectly. You need to enter a number.");
                 return false;
             }
             if (Type_of_crypt.SelectedIndex == 1 && !int.TryParse(OneLineKey_Decrypt.Text, out int result))
             {
-                MessageBox.Show("Ключ для шифрування введено не правильно. Потрібно ввести число.");
+                MessageBox.Show("The encryption key was entered incorrectly. You need to enter a number.");
                 return false;
             }
             if (Type_of_crypt.SelectedIndex == 2 && !Regex.IsMatch(OneLineKey_Decrypt.Text, pattern_only_two_numbers))
             {
-                MessageBox.Show("Ключ для шифрування введено не правильно. Потрібно ввести числа через кому. (1,2)");
+                MessageBox.Show("The encryption key was entered incorrectly. You need to enter numbers separated by commas. (1,2)");
                 return false;
             }
             if (Type_of_crypt.SelectedIndex == 3 && !Regex.IsMatch(OneLineKey_Decrypt.Text, patternoOnlyThreeNumbers))
             {
-                MessageBox.Show("Ключ для шифрування введено не правильно. Потрібно ввести числа через кому. (1,2,3)");
+                MessageBox.Show("The encryption key was entered incorrectly. You need to enter numbers separated by commas. (1,2,3)");
                 return false;
             }
             return true;
@@ -244,22 +243,6 @@ namespace CryptingProgram
             FilesWork.LoadFile(outputFilePath, Decrypt_Text.Text);
         }
 
-        private void Delete_Button_Click(object sender, RoutedEventArgs e)
-        {
-            Encrypt_Text.Text = "";
-            Decrypt_Text.Text = "";
-            OneLineKey_Decrypt.Text = "";
-            OneLineKey_Encrypt.Text = "";
-        }
-
-        static void Swap<T>(T lhs, T rhs)
-        {
-            T temp;
-            temp = lhs;
-            lhs = rhs;
-            rhs = temp;
-        }
-
         private void Swap_Button_Click(object sender, RoutedEventArgs e)
         {
             Thickness thickness;
@@ -283,13 +266,17 @@ namespace CryptingProgram
             Open_Encrypt_Button.Margin = Open_Decrypt_Button.Margin;
             Open_Decrypt_Button.Margin = thickness;
 
-            thickness = Delete_Button.Margin;
-            Delete_Button.Margin = Save_Decrypt_Button.Margin;
+            thickness = Delete_Button_Encrypt.Margin;
+            Delete_Button_Encrypt.Margin = Save_Decrypt_Button.Margin;
             Save_Decrypt_Button.Margin = thickness;
 
-            thickness = Copy_Button_Encrypt.Margin;
-            Copy_Button_Encrypt.Margin = Copy_Button_Decrypt.Margin;
+            thickness = Button_Left.Margin;
+            Button_Left.Margin = Copy_Button_Decrypt.Margin;
             Copy_Button_Decrypt.Margin = thickness;
+
+            thickness = Button_Right.Margin;
+            Button_Right.Margin = Delete_Button_Decrypt.Margin;
+            Delete_Button_Decrypt.Margin = thickness;
 
             thickness = Encrypt_Button.Margin;
             Encrypt_Button.Margin = Decrypt_Button.Margin;
@@ -306,50 +293,16 @@ namespace CryptingProgram
             Clipboard.SetText(Encrypt_Text.Text);
         }
 
-        /*static void Dark_theme(Control control)
+        private void Delete_Button_Encrypt_Click(object sender, RoutedEventArgs e)
         {
-            control.Foreground = Brushes.Blue;
-            control.Background = Brushes.Black;
-            control.BorderBrush = Brushes.Yellow;
+            Encrypt_Text.Text = "";
+            OneLineKey_Encrypt.Text = "";
         }
 
-        static void Light_theme(Control control)
+        private void Delete_Button_Decrypt_Click(object sender, RoutedEventArgs e)
         {
-            control.Foreground = Brushes.Black;
-            control.Background = Brushes.White;
-            control.BorderBrush = Brushes.LightGray;
+            Decrypt_Text.Text = "";
+            OneLineKey_Decrypt.Text = "";
         }
-
-        public static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
-        {
-            if (depObj == null) yield return (T)Enumerable.Empty<T>();
-            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
-            {
-                DependencyObject ithChild = VisualTreeHelper.GetChild(depObj, i);
-                if (ithChild == null) continue;
-                if (ithChild is T t) yield return t;
-                foreach (T childOfChild in FindVisualChildren<T>(ithChild)) yield return childOfChild;
-            }
-        }
-
-        private void Theme_Button_Click(object sender, RoutedEventArgs e)
-        {
-            if (theme == 0)
-            {
-                theme = 1;
-                foreach(Control control in FindVisualChildren<Control>(Application.Current.MainWindow))
-                {
-                    Dark_theme(control);
-                }
-            }
-            else
-            {
-                theme = 0;
-                foreach (Control control in FindVisualChildren<Control>(Application.Current.MainWindow))
-                {
-                    Light_theme(control);
-                }
-            }
-        }*/
     }
 }

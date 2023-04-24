@@ -7,43 +7,45 @@
         mc:Ignorable="d"
         Title="Шифрувальна програма" Height="603.6" Width="865.2">
     <Grid>
-        <Button Name ="Info_Button" Content="Справка" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="Info_Button_Click" Height="22"/>
-        <StackPanel>
+        <StackPanel Background="Black">
             <TextBox x:Name ="Encrypt_Text" HorizontalAlignment="Left" Height="135" Margin="10,70,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="838" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-         ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+         ScrollViewer.VerticalScrollBarVisibility="Auto" Foreground="White" Background="Black" FontFamily="Courier New" FontSize="14"/>
         </StackPanel>
-        <Button Name="Swap_Button" Content="&lt;--- &#xa; ---&gt;" HorizontalAlignment="Left" Height="50" Margin="12,0,0,275.6" Width="50" VerticalAlignment="Bottom" Click="Swap_Button_Click">
+        <Button Name="Swap_Button" Content="&lt;--- &#xa; ---&gt;" HorizontalAlignment="Left" Height="50" Margin="12,0,0,275.6" Width="50" VerticalAlignment="Bottom" Click="Swap_Button_Click" Background="Black" Foreground="White">
 
             <Button.LayoutTransform>
                 <RotateTransform Angle="90"/>
             </Button.LayoutTransform>
         </Button>
-        <TextBlock Name="Encrypt" HorizontalAlignment="Left" Margin="10,49,0,0" TextWrapping="Wrap" Text="Зашифрувати" VerticalAlignment="Top" FontSize="14"/>
-        <TextBlock HorizontalAlignment="Left" Margin="208,210,0,0" TextWrapping="Wrap" Text="Ключ" VerticalAlignment="Top" Height="22" Width="42" FontSize="14"/>
-        <TextBox Name="OneLineKey_Encrypt" HorizontalAlignment="Left" Height="23" Margin="274,210,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="127" />
-        <ComboBox Name="Type_of_crypt" HorizontalAlignment="Left" Margin="75,0,0,0" VerticalAlignment="Top" Width="193" Height="22" SelectedIndex="0">
-            <ComboBoxItem Content="Вид шифрування"/>
-            <ComboBoxItem Content="Шифр Цезаря"/>
-            <ComboBoxItem Content="Шифр Тритеміуса Лінійний"/>
-            <ComboBoxItem Content="Шифр Тритеміуса Нелінійний"/>
-            <ComboBoxItem Content="Шифр Тритеміуса Слоган"/>
-            <ComboBoxItem Content="Шифр Гамування"/>
+        <TextBlock Name="Encrypt" HorizontalAlignment="Left" Margin="10,49,0,0" TextWrapping="Wrap" Text="Encrypt" VerticalAlignment="Top" FontSize="14" Background="Black" Foreground="White" FontFamily="Courier New"/>
+        <TextBlock HorizontalAlignment="Left" Margin="208,210,0,0" TextWrapping="Wrap" Text="Key" VerticalAlignment="Top" Height="22" Width="42" FontSize="14" Background="Black" Foreground="White" FontFamily="Courier New" TextAlignment="Center"/>
+        <TextBox Name="OneLineKey_Encrypt" HorizontalAlignment="Left" Height="23" Margin="274,210,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="127" Background="Black" Foreground="White" FontFamily="Courier New" FontSize="14" />
+        <ComboBox Name="Type_of_crypt" HorizontalAlignment="Left" Margin="75,0,0,0" VerticalAlignment="Top" Width="193" Height="22" SelectedIndex="0" Background="Black" FontFamily="Courier New" FontSize="14">
+            <ComboBoxItem Content="Type of crypt"/>
+            <ComboBoxItem Content="Caesar crypt"/>
+            <ComboBoxItem Content="Tritemius Linear crypt"/>
+            <ComboBoxItem Content="Tritemius Nonlinear crypt"/>
+            <ComboBoxItem Content="Tritemius Slogan crypt"/>
+            <ComboBoxItem Content="XOR crypt"/>
         </ComboBox>
-        <Button Name ="Random_Key_Encrypt" Content="Випадковий ключ" HorizontalAlignment="Left" Margin="10,210,0,0" VerticalAlignment="Top" Width="193" Height="23" Click="Random_Key_Encrypt_Click"/>
-        <Button Name="Open_Encrypt_Button" Content="Відкрити файл" HorizontalAlignment="Left" Height="22" Margin="414,210,0,0" VerticalAlignment="Top" Width="85" Click="Open_Encrypt_Button_Click"/>
-        <Button Name="Encrypt_Button" Content="Зашифрувати" HorizontalAlignment="Left" Height="22" Margin="724,210,0,0" VerticalAlignment="Top" Width="124" Click="Encrypt_Button_Click"/>
-        <Button x:Name="Delete_Button" Content="Очистити все" HorizontalAlignment="Left" Height="22" Margin="504,210,0,0" VerticalAlignment="Top" Width="87" Click="Delete_Button_Click"/>
-        <Button Name ="Copy_Button_Encrypt" Content="Копіювати" HorizontalAlignment="Left" Margin="414,245,0,0" VerticalAlignment="Top" Width="177" Height="23" Click="Copy_Button_Encrypt_Click" Visibility="Hidden"/>
+        <Button Name ="Random_Key_Encrypt" Content="Random key" HorizontalAlignment="Left" Margin="10,210,0,0" VerticalAlignment="Top" Width="193" Height="23" Click="Random_Key_Encrypt_Click" Background="Black" Foreground="White" FontFamily="Courier New" FontSize="14"/>
+        <Button Name="Open_Encrypt_Button" Content="Open file" HorizontalAlignment="Left" Height="22" Margin="414,210,0,0" VerticalAlignment="Top" Width="85" Click="Open_Encrypt_Button_Click" Background="Black" Foreground="White" FontFamily="Courier New" FontSize="14"/>
+        <Button Name="Encrypt_Button" Content="Encrypt" HorizontalAlignment="Left" Height="22" Margin="724,210,0,0" VerticalAlignment="Top" Width="124" Click="Encrypt_Button_Click" Background="Black" Foreground="White" FontFamily="Courier New" FontSize="14"/>
+        <Button x:Name="Delete_Button_Encrypt" Content="Clear" HorizontalAlignment="Left" Height="22" Margin="504,210,0,0" VerticalAlignment="Top" Width="87" Background="Black" Foreground="White" FontFamily="Courier New" FontSize="14" Click="Delete_Button_Encrypt_Click"/>
+        <Button Name ="Button_Left" Content="Copy" HorizontalAlignment="Left" Margin="414,245,0,0" VerticalAlignment="Top" Width="85" Height="23" Visibility="Hidden"/>
+        <Button Name ="Button_Right" Content="Copy" HorizontalAlignment="Left" Margin="504,245,0,0" VerticalAlignment="Top" Width="85" Height="23" Visibility="Hidden"/>
 
         <TextBox x:Name ="Decrypt_Text" HorizontalAlignment="Left" Height="135" Margin="10,328,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="838" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-         ScrollViewer.VerticalScrollBarVisibility="Auto"/>
-        <TextBlock Name ="Decrypt" HorizontalAlignment="Left" Margin="10,307,0,0" TextWrapping="Wrap" Text="Розшифрувати" VerticalAlignment="Top" FontSize="14"/>
-        <TextBlock HorizontalAlignment="Left" Margin="208,467,0,0" TextWrapping="Wrap" Text="Ключ" VerticalAlignment="Top" Height="22" Width="42" FontSize="14"/>
-        <TextBox x:Name="OneLineKey_Decrypt" HorizontalAlignment="Left" Height="23" Margin="274,467,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="127" />
-        <Button x:Name="Open_Decrypt_Button" Content="Відкрити файл" HorizontalAlignment="Left" Height="22" Margin="414,468,0,0" VerticalAlignment="Top" Width="85" Click="Open_Decrypt_Button_Click"/>
-        <Button x:Name="Save_Decrypt_Button" Content="Зберегти файл" HorizontalAlignment="Left" Height="22" Margin="504,468,0,0" VerticalAlignment="Top" Width="87" Click="Save_Decrypt_Button_Click"/>
-        <Button x:Name="Decrypt_Button" Content="Розшифрувати" HorizontalAlignment="Left" Height="22" Margin="724,468,0,0" VerticalAlignment="Top" Width="124" Click="Decrypt_Button_Click"/>
-        <Button Name ="Copy_Button_Decrypt" Content="Копіювати" HorizontalAlignment="Left" Margin="414,502,0,0" VerticalAlignment="Top" Width="177" Height="23" Click="Copy_Button_Decrypt_Click"/>
+         ScrollViewer.VerticalScrollBarVisibility="Auto" Background="Black" Foreground="White" FontFamily="Courier New" FontSize="14"/>
+        <TextBlock Name ="Decrypt" HorizontalAlignment="Left" Margin="10,307,0,0" TextWrapping="Wrap" Text="Decrypt" VerticalAlignment="Top" FontSize="14" Background="Black" Foreground="White" FontFamily="Courier New"/>
+        <TextBlock HorizontalAlignment="Left" Margin="208,467,0,0" TextWrapping="Wrap" Text="Key" VerticalAlignment="Top" Height="22" Width="42" FontSize="14" Background="Black" Foreground="White" FontFamily="Courier New" TextAlignment="Center"/>
+        <TextBox x:Name="OneLineKey_Decrypt" HorizontalAlignment="Left" Height="23" Margin="274,467,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="127" Background="Black" Foreground="White" FontFamily="Courier New" FontSize="14" />
+        <Button x:Name="Open_Decrypt_Button" Content="Open file" HorizontalAlignment="Left" Height="22" Margin="414,468,0,0" VerticalAlignment="Top" Width="85" Click="Open_Decrypt_Button_Click" Background="Black" Foreground="White" FontFamily="Courier New" FontSize="14"/>
+        <Button x:Name="Save_Decrypt_Button" Content="Save file" HorizontalAlignment="Left" Height="22" Margin="504,468,0,0" VerticalAlignment="Top" Width="87" Click="Save_Decrypt_Button_Click" Background="Black" Foreground="White" FontFamily="Courier New" FontSize="14"/>
+        <Button x:Name="Decrypt_Button" Content="Decrypt" HorizontalAlignment="Left" Height="22" Margin="724,468,0,0" VerticalAlignment="Top" Width="124" Click="Decrypt_Button_Click" Background="Black" Foreground="White" FontFamily="Courier New" FontSize="14"/>
+        <Button Name ="Copy_Button_Decrypt" Content="Copy" HorizontalAlignment="Left" Margin="414,502,0,0" VerticalAlignment="Top" Width="85" Height="23" Click="Copy_Button_Decrypt_Click" Background="Black" Foreground="White" FontFamily="Courier New" FontSize="14"/>
         <Button Name ="Random_Key_Decrypt" Content="Випадковий ключ" HorizontalAlignment="Left" Margin="10,468,0,0" VerticalAlignment="Top" Width="193" Height="23" Visibility="Hidden"/>
+        <Button x:Name="Delete_Button_Decrypt" Content="Clear" HorizontalAlignment="Left" Height="22" Margin="504,503,0,0" VerticalAlignment="Top" Width="87" Background="Black" Foreground="White" FontFamily="Courier New" FontSize="14" Click="Delete_Button_Decrypt_Click"/>
+        <Button x:Name ="Info_Button" Content="Info" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="Info_Button_Click" Height="22" Background="Black" Foreground="White" FontSize="14" FontFamily="Courier New"/>
     </Grid>
 </Window>
