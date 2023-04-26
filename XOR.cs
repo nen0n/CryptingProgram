@@ -8,7 +8,7 @@ namespace CryptingProgram
 {
     public class XOR : Crypting
     {
-        public override string CryptText(Crypt crypt, string plainText, string key)
+        public override string CryptText(Crypt crypt, string inputText, string key)
         {
             byte[] keyBytes = Encoding.Unicode.GetBytes(key); // Переведення в байти ключа
             byte[] hashBytes = SHA256.Create().ComputeHash(keyBytes); // Хешування байтів
@@ -16,15 +16,15 @@ namespace CryptingProgram
             string gamma = String.Concat(Enumerable.Repeat(hashString, 100)); // Повторення тексту 100 разів
 
             byte[] byteKey = Encoding.Unicode.GetBytes(gamma);
-            byte[] inputBytes = Encoding.Unicode.GetBytes(plainText);
-            string output;
+            byte[] inputBytes = Encoding.Unicode.GetBytes(inputText);
+            string outputText;
 
             for (int i = 0; i < inputBytes.Length; i++)
             {
                 inputBytes[i] ^= byteKey[i % byteKey.Length]; // XOR оператор
             }
-            output = Encoding.Unicode.GetString(inputBytes);
-            return output;
+            outputText = Encoding.Unicode.GetString(inputBytes);
+            return outputText;
         }
     }
 }
