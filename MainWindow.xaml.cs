@@ -121,8 +121,8 @@ namespace CryptingProgram
                 catch
                 {
                     MessageBox.Show("The verse was written incorrectly");
+                    return false;
                 }
-                return false;
             }
             return true;
         }
