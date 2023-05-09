@@ -10,21 +10,22 @@ namespace CryptingProgram
     {
         public override string CryptText(Crypt crypt, string inputText, string key)
         {
+            string gamma = GammaGenerator(key, inputText);
+            string outputText = "";
+            for (int i = 0; i < inputText.Length; i++)
+            {
+                outputText += (char)(gamma[i] ^ inputText[i % inputText.Length]);
+            }
+            return outputText;
+        }
+
+        private string GammaGenerator(string key, string inputText)
+        {
             byte[] keyBytes = Encoding.Unicode.GetBytes(key); // Переведення в байти ключа
             byte[] hashBytes = SHA256.Create().ComputeHash(keyBytes); // Хешування байтів
             string hashString = BitConverter.ToString(hashBytes).Replace("-", "").ToLower(); // Переведення в стрічку
-            string gamma = String.Concat(Enumerable.Repeat(hashString, 100)); // Повторення тексту 100 разів
-
-            byte[] byteKey = Encoding.Unicode.GetBytes(gamma);
-            byte[] inputBytes = Encoding.Unicode.GetBytes(inputText);
-            string outputText;
-
-            for (int i = 0; i < inputBytes.Length; i++)
-            {
-                inputBytes[i] ^= byteKey[i % byteKey.Length]; // XOR оператор
-            }
-            outputText = Encoding.Unicode.GetString(inputBytes);
-            return outputText;
+            string gamma = String.Concat(Enumerable.Repeat(hashString, inputText.Length / hashString.Length + 1 )); 
+            return gamma;
         }
     }
 }
