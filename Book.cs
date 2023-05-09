@@ -10,27 +10,17 @@ namespace CryptingProgram
     {
         public override string CryptText(Crypt crypt, string inputText, string key)
         {
-            string inputTextToLower = inputText.ToLower();
-            string keyToLower = key.ToLower();
-            string keyWithDash = keyToLower.Replace("\r\n", "I");
-            keyWithDash = keyWithDash.Replace("\n", "I");
-            string keyWithoutSpaceWithDash = String.Concat(keyWithDash.Where(letter => Char.IsLetter(letter)));
-            string[] substrings = keyWithoutSpaceWithDash.Split('I');
-            char[,] matrix = new char[10, 10];
             string outputText = "";
-            for(int i = 0; i < 10; i++)
-            {
-                for(int j = 0; j < 10; j++)
-                {
-                    matrix[i, j] = substrings[i][j];
-                }
-            }
+
+            inputText = inputText.ToLower();
+
+            var matrix = MatrixGenerator(key);
 
             if (crypt == Crypt.Encrypt)
             {
                 Random random = new Random();
                 bool found;
-                foreach (char letter in inputTextToLower)
+                foreach (char letter in inputText)
                 {
                     found = false;
                     int randX = random.Next(0, 9);
@@ -67,6 +57,25 @@ namespace CryptingProgram
                 }
             }
             return outputText;
+        }
+
+        private char[,] MatrixGenerator(string key)
+        {
+            string keyToLower = key.ToLower();
+            string keyWithDash = keyToLower.Replace("\r\n", "I");
+            keyWithDash = keyWithDash.Replace("\n", "I");
+            string keyWithoutSpaceWithDash = String.Concat(keyWithDash.Where(letter => Char.IsLetter(letter)));
+            string[] substrings = keyWithoutSpaceWithDash.Split('I');
+            char[,] matrix = new char[10, 10];
+
+            for (int i = 0; i < 10; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    matrix[i, j] = substrings[i][j];
+                }
+            }
+            return matrix;
         }
     }
 }
