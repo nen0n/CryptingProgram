@@ -9,6 +9,9 @@ namespace CryptingProgram
 {
     class Book : Crypting
     {
+        private int lengthOfMatrix = 10;
+
+
         public override string CryptText(Crypt crypt, string inputText, string key)
         {
             string outputText = "";
@@ -23,9 +26,9 @@ namespace CryptingProgram
                 {
                     foundedPairs.Clear();
                     foundRigthPair = false;
-                    for (int i = 0; i < 10; i++)
+                    for (int i = 0; i < lengthOfMatrix; i++)
                     {
-                        for(int j = 0; j < 10; j++)
+                        for(int j = 0; j < lengthOfMatrix; j++)
                         {
                             if (letter == matrixOfVerse[i, j])
                             {
@@ -60,15 +63,15 @@ namespace CryptingProgram
 
         private char[,] MatrixGenerator(string key)
         {
-            char[,] matrixOfVerse = new char[10, 10];
+            char[,] matrixOfVerse = new char[lengthOfMatrix, lengthOfMatrix];
             string[] linesOfVerse = key.ToLower().Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
-            for(int line = 0; line < 10; line++)
+            for(int line = 0; line < lengthOfMatrix; line++)
             {
                 linesOfVerse[line] = string.Concat(linesOfVerse[line].Where(letter => Char.IsLetter(letter)));
             }
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < lengthOfMatrix; i++)
             {
-                for (int j = 0; j < 10; j++)
+                for (int j = 0; j < lengthOfMatrix; j++)
                 {
                     matrixOfVerse[i, j] = linesOfVerse[i][j];
                 }
