@@ -19,43 +19,60 @@ namespace CryptingProgram
             var matrixOfVerse = MatrixGenerator(key);
             if (crypt == Crypt.Encrypt)
             {
-                Random random = new Random();
-                bool foundRigthPair;
-                List<string> foundedPairs = new List<string> { };
-                foreach (char letter in inputText)
+                if (ContainLetter(inputText, matrixOfVerse))
                 {
-                    foundedPairs.Clear();
-                    foundRigthPair = false;
-                    for (int i = 0; i < lengthOfMatrix; i++)
+                    Random random = new Random();
+                    bool foundRigthPair;
+                    List<string> foundedPairs = new List<string> { };
+                    foreach (char letter in inputText)
                     {
-                        for(int j = 0; j < lengthOfMatrix; j++)
+                        foundedPairs.Clear();
+                        foundRigthPair = false;
+                        if (letter == ' ')
                         {
-                            if (letter == matrixOfVerse[i, j])
+                            outputText += ", ";
+                        }
+                        else
+                        {
+                            for (int i = 0; i < lengthOfMatrix; i++)
                             {
-                                foundedPairs.Add((i + 1).ToString() + "/" + (j + 1).ToString() + ", ");
-                                foundRigthPair = true;
+                                for (int j = 0; j < lengthOfMatrix; j++)
+                                {
+                                    if (letter == matrixOfVerse[i, j])
+                                    {
+                                        foundedPairs.Add((i + 1).ToString() + "/" + (j + 1).ToString() + ", ");
+                                        foundRigthPair = true;
+                                    }
+                                }
+                            }
+                            if (foundRigthPair == false)
+                            {
+                                outputText += random.Next(1, 11).ToString() + "/" + random.Next(1, 11).ToString() + ", ";
+                            }
+                            else
+                            {
+                                outputText += foundedPairs[random.Next(0, foundedPairs.Count)];
                             }
                         }
-                    }
-                    if (foundRigthPair == false)
-                    {
-                        outputText += random.Next(1, 11).ToString() + "/" + random.Next(1, 11).ToString() + ", ";
-                    }
-                    else
-                    {
-                        outputText += foundedPairs[random.Next(0, foundedPairs.Count)];
                     }
                 }
             }
             if (crypt == Crypt.Decrypt)
             {
                 string[] pairs = inputText.Split(',');
-                for(int pair = 0; pair < pairs.Length - 1; pair++)
+                for (int pair = 0; pair < pairs.Length - 1; pair++)
                 {
-                    string[] twoCoordinates = pairs[pair].Split('/');
-                    int i = int.Parse(twoCoordinates[0]);
-                    int j = int.Parse(twoCoordinates[1]);
-                    outputText += matrixOfVerse[i - 1, j - 1];
+                    if(pairs[pair] == " ")
+                    {
+                        outputText += " ";
+                    }
+                    else
+                    {
+                        string[] twoCoordinates = pairs[pair].Split('/');
+                        int i = int.Parse(twoCoordinates[0]);
+                        int j = int.Parse(twoCoordinates[1]);
+                        outputText += matrixOfVerse[i - 1, j - 1];
+                    }
                 }
             }
             return outputText;
@@ -77,6 +94,48 @@ namespace CryptingProgram
                 }
             }
             return matrixOfVerse;
+        }
+
+        private bool ContainLetter(string inputText, char[,] matrix)
+        {
+            bool containAllLetters = true;
+            HashSet<char> verseLetters = new HashSet<char>();
+            HashSet<char> inputLetters = new HashSet<char>();
+            List<char> absentLettes = new List<char> { };
+
+            for (int i = 0; i < lengthOfMatrix; i++)
+            {
+                for (int j = 0; j < lengthOfMatrix; j++)
+                {
+                    verseLetters.Add(matrix[i, j]);
+                }
+            }
+            for(int i = 0; i < inputText.Length; i++)
+            {
+                inputLetters.Add(inputText[i]);
+            }
+            foreach (char letter in inputLetters)
+            {
+                if(letter != ' ')
+                {
+                    if(!verseLetters.Contains(letter))
+                    {
+                        containAllLetters = false;
+                        absentLettes.Add(letter);
+                    }
+                }
+            }
+            if (containAllLetters == false)
+            {
+                string errorText = "No such symbols in Verse: ";
+                foreach(char symbol in absentLettes)
+                {
+                    errorText += "'" + symbol + "' ";
+                }
+                System.Windows.MessageBox.Show(errorText);
+            }
+
+            return containAllLetters;
         }
     }
 }
