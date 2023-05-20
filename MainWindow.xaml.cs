@@ -1,19 +1,9 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.IO;
 
 namespace CryptingProgram
 {
@@ -31,6 +21,7 @@ namespace CryptingProgram
         private TritemiusNonlinear tritemiusNonlinear = new TritemiusNonlinear();
         private TritemiusSlogan tritemiusSlogan = new TritemiusSlogan();
         private XOR xor = new XOR();
+        private Book book = new Book();
         public MainWindow()
         {
             InitializeComponent();
@@ -74,6 +65,18 @@ namespace CryptingProgram
                 MessageBox.Show("The encryption key was entered incorrectly. You need to enter numbers separated by commas. (1,2,3)");
                 return false;
             }
+            if (Type_of_crypt.SelectedIndex == 6)
+            {
+                try
+                {
+                    book.CryptText(Crypting.Crypt.Encrypt, Encrypt_Text.Text, OneLineKey_Encrypt.Text);
+                }
+                catch
+                {
+                    MessageBox.Show("The verse was written incorrectly");
+                    return false;
+                }
+            }
             return true;
         }
 
@@ -109,6 +112,18 @@ namespace CryptingProgram
                 MessageBox.Show("The encryption key was entered incorrectly. You need to enter numbers separated by commas. (1,2,3)");
                 return false;
             }
+            if(Type_of_crypt.SelectedIndex == 6)
+            {
+                try
+                {
+                    book.CryptText(Crypting.Crypt.Decrypt, Decrypt_Text.Text, OneLineKey_Decrypt.Text);
+                }
+                catch
+                {
+                    MessageBox.Show("The verse was written incorrectly");
+                    return false;
+                }
+            }
             return true;
         }
 
@@ -132,6 +147,9 @@ namespace CryptingProgram
                         break;
                     case 5:
                         Decrypt_Text.Text = xor.CryptText(Crypting.Crypt.Encrypt, Encrypt_Text.Text, OneLineKey_Encrypt.Text);
+                        break;
+                    case 6:
+                        Decrypt_Text.Text = book.CryptText(Crypting.Crypt.Encrypt, Encrypt_Text.Text, OneLineKey_Encrypt.Text);
                         break;
                 }
             }
@@ -157,6 +175,9 @@ namespace CryptingProgram
                         break;
                     case 5:
                         Encrypt_Text.Text = xor.CryptText(Crypting.Crypt.Decrypt, Decrypt_Text.Text, OneLineKey_Decrypt.Text);
+                        break;
+                    case 6:
+                        Encrypt_Text.Text = book.CryptText(Crypting.Crypt.Decrypt, Decrypt_Text.Text, OneLineKey_Decrypt.Text);
                         break;
                 }
             }
@@ -190,6 +211,22 @@ namespace CryptingProgram
                     {
                         OneLineKey_Encrypt.Text += chars[Random.Next(chars.Length)];
                     }
+                    break;
+                case 6:
+                    Random random = new Random();
+                    var rand = random.Next(3);
+                    if(rand == 0)
+                    {
+                        OneLineKey_Encrypt.Text = File.ReadAllText(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\VerseFirst.txt");
+                    }
+                    if(rand == 1)
+                    {
+                        OneLineKey_Encrypt.Text = File.ReadAllText(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\VerseSecond.txt");
+                    }
+                    if(rand == 2)
+                    {
+                        OneLineKey_Encrypt.Text = File.ReadAllText(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\VerseThird.txt");
+                    }    
                     break;
             }
         }
@@ -303,6 +340,25 @@ namespace CryptingProgram
         {
             Decrypt_Text.Text = "";
             OneLineKey_Decrypt.Text = "";
+        }
+
+        private void Type_of_crypt_DropDownClosed(object sender, EventArgs e)
+        {
+            if(Type_of_crypt.SelectedIndex == 6)
+            {
+                OneLineKey_Decrypt.Height = 57;
+                OneLineKey_Encrypt.Height = 57;
+                OneLineKey_Decrypt.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
+                OneLineKey_Encrypt.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
+
+            }
+            else
+            {
+                OneLineKey_Decrypt.Height = 23;
+                OneLineKey_Encrypt.Height = 23;
+                OneLineKey_Decrypt.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
+                OneLineKey_Encrypt.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
+            }
         }
     }
 }
