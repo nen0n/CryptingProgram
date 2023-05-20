@@ -9,7 +9,7 @@ namespace CryptingProgram
     {
         public static string ReadFile(string filePath)
         {
-            string fileContents = "";
+            string fileContents;
 
             try
             {

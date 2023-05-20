@@ -9,7 +9,7 @@ namespace CryptingProgram
 {
     class Book : Crypting
     {
-        private int lengthOfMatrix = 10;
+        private readonly int lengthOfMatrix = 10;
 
 
         public override string CryptText(Crypt crypt, string inputText, string key)

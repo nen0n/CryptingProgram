@@ -4,6 +4,8 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.IO;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CryptingProgram
 {
@@ -14,14 +16,15 @@ namespace CryptingProgram
     {
         public string selectedInputFile;
         public string selectedOutputPath;
-        private string pattern_only_two_numbers = @"^(-?\d+,-?\d+)$";
-        private string patternoOnlyThreeNumbers = @"^(-?\d+,-?\d+,-?\d+)$";
+        private readonly string pattern_only_two_numbers = @"^(-?\d+,-?\d+)$";
+        private readonly string patternoOnlyThreeNumbers = @"^(-?\d+,-?\d+,-?\d+)$";
         private Caesar caesar = new Caesar();
         private TritemiusLinear tritemiusLinear = new TritemiusLinear();
         private TritemiusNonlinear tritemiusNonlinear = new TritemiusNonlinear();
         private TritemiusSlogan tritemiusSlogan = new TritemiusSlogan();
         private XOR xor = new XOR();
         private Book book = new Book();
+        private DES des = new DES();
         public MainWindow()
         {
             InitializeComponent();
@@ -77,6 +80,40 @@ namespace CryptingProgram
                     return false;
                 }
             }
+            if (Type_of_crypt.SelectedIndex == 7)
+            {
+                if (Type_of_DES.SelectedIndex == 0)
+                {
+                    MessageBox.Show("No DES type selected.");
+                    return false;
+                }
+                if (OneLineIV_Encrypt.Text == "")
+                {
+                    MessageBox.Show("No IV entered.");
+                    return false;
+                }
+                try
+                {
+                    switch (Type_of_DES.SelectedIndex)
+                    {
+                        case 1:
+                            des.CryptText(Crypting.Crypt.Encrypt, System.Security.Cryptography.CipherMode.CBC, Encrypt_Text.Text, OneLineKey_Encrypt.Text, OneLineIV_Encrypt.Text);
+                            break;
+                        case 2:
+                            des.CryptText(Crypting.Crypt.Encrypt, System.Security.Cryptography.CipherMode.CFB, Encrypt_Text.Text, OneLineKey_Encrypt.Text, OneLineIV_Encrypt.Text);
+                            break;
+                        case 3:
+                            des.CryptText(Crypting.Crypt.Encrypt, System.Security.Cryptography.CipherMode.ECB, Encrypt_Text.Text, OneLineKey_Encrypt.Text, OneLineIV_Encrypt.Text);
+                            break;
+                    }
+                }
+
+                catch
+                {
+                    MessageBox.Show("Something gone wrong. Try again!\n");
+                    return false;
+                }
+            }
             return true;
         }
 
@@ -124,6 +161,39 @@ namespace CryptingProgram
                     return false;
                 }
             }
+            if(Type_of_crypt.SelectedIndex == 7)
+            {
+                if (Type_of_DES.SelectedIndex == 0)
+                {
+                    MessageBox.Show("No DES type selected.");
+                    return false;
+                }
+                if (OneLineIV_Decrypt.Text == "")
+                {
+                    MessageBox.Show("No IV entered.");
+                    return false;
+                }
+                try
+                {
+                    switch (Type_of_DES.SelectedIndex)
+                    {
+                        case 1:
+                            des.CryptText(Crypting.Crypt.Decrypt, System.Security.Cryptography.CipherMode.CBC, Decrypt_Text.Text, OneLineKey_Decrypt.Text, OneLineIV_Decrypt.Text);
+                            break;
+                        case 2:
+                            des.CryptText(Crypting.Crypt.Decrypt, System.Security.Cryptography.CipherMode.CFB, Decrypt_Text.Text, OneLineKey_Decrypt.Text, OneLineIV_Decrypt.Text);
+                            break;
+                        case 3:
+                            des.CryptText(Crypting.Crypt.Decrypt, System.Security.Cryptography.CipherMode.ECB, Decrypt_Text.Text, OneLineKey_Decrypt.Text, OneLineIV_Decrypt.Text);
+                            break;
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("Something gone wrong. Try again!");
+                    return false;
+                }
+            }
             return true;
         }
 
@@ -150,6 +220,20 @@ namespace CryptingProgram
                         break;
                     case 6:
                         Decrypt_Text.Text = book.CryptText(Crypting.Crypt.Encrypt, Encrypt_Text.Text, OneLineKey_Encrypt.Text);
+                        break;
+                    case 7:
+                        switch (Type_of_DES.SelectedIndex)
+                        {
+                            case 1:
+                                Decrypt_Text.Text = des.CryptText(Crypting.Crypt.Encrypt, System.Security.Cryptography.CipherMode.CBC, Encrypt_Text.Text, OneLineKey_Encrypt.Text, OneLineIV_Encrypt.Text);
+                                break;
+                            case 2:
+                                Decrypt_Text.Text = des.CryptText(Crypting.Crypt.Encrypt, System.Security.Cryptography.CipherMode.CFB, Encrypt_Text.Text, OneLineKey_Encrypt.Text, OneLineIV_Encrypt.Text);
+                                break;
+                            case 3:
+                                Decrypt_Text.Text = des.CryptText(Crypting.Crypt.Encrypt, System.Security.Cryptography.CipherMode.ECB, Encrypt_Text.Text, OneLineKey_Encrypt.Text, OneLineIV_Encrypt.Text);
+                                break;
+                        }
                         break;
                 }
             }
@@ -178,6 +262,20 @@ namespace CryptingProgram
                         break;
                     case 6:
                         Encrypt_Text.Text = book.CryptText(Crypting.Crypt.Decrypt, Decrypt_Text.Text, OneLineKey_Decrypt.Text);
+                        break;
+                    case 7:
+                        switch (Type_of_DES.SelectedIndex)
+                        {
+                            case 1:
+                                Encrypt_Text.Text = des.CryptText(Crypting.Crypt.Decrypt, System.Security.Cryptography.CipherMode.CBC, Decrypt_Text.Text, OneLineKey_Decrypt.Text, OneLineIV_Decrypt.Text);
+                                break;
+                            case 2:
+                                Encrypt_Text.Text = des.CryptText(Crypting.Crypt.Decrypt, System.Security.Cryptography.CipherMode.CFB, Decrypt_Text.Text, OneLineKey_Decrypt.Text, OneLineIV_Decrypt.Text);
+                                break;
+                            case 3:
+                                Encrypt_Text.Text = des.CryptText(Crypting.Crypt.Decrypt, System.Security.Cryptography.CipherMode.ECB, Decrypt_Text.Text, OneLineKey_Decrypt.Text, OneLineIV_Decrypt.Text);
+                                break;
+                        }
                         break;
                 }
             }
@@ -227,6 +325,22 @@ namespace CryptingProgram
                     {
                         OneLineKey_Encrypt.Text = File.ReadAllText(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\VerseThird.txt");
                     }    
+                    break;
+                case 7:
+                    {
+                        OneLineKey_Encrypt.Text = "";
+                        for (int i = 0; i < 8; i++)
+                        {
+                            OneLineKey_Encrypt.Text += chars[Random.Next(chars.Length)];
+                            OneLineKey_Encrypt.Text = OneLineKey_Encrypt.Text.ToUpper();
+                        }
+                        OneLineIV_Encrypt.Text = "";
+                        for (int i = 0; i < 8; i++)
+                        {
+                            OneLineIV_Encrypt.Text += chars[Random.Next(chars.Length)];
+                            OneLineIV_Encrypt.Text = OneLineIV_Encrypt.Text.ToUpper();
+                        }
+                    }
                     break;
             }
         }
@@ -318,6 +432,10 @@ namespace CryptingProgram
             thickness = Encrypt_Button.Margin;
             Encrypt_Button.Margin = Decrypt_Button.Margin;
             Decrypt_Button.Margin = thickness;
+
+            thickness = OneLineIV_Decrypt.Margin;
+            OneLineKey_Decrypt.Margin = OneLineKey_Encrypt.Margin;
+            OneLineIV_Encrypt.Margin = thickness;
         }
 
         private void Copy_Button_Decrypt_Click(object sender, RoutedEventArgs e)
@@ -334,12 +452,14 @@ namespace CryptingProgram
         {
             Encrypt_Text.Text = "";
             OneLineKey_Encrypt.Text = "";
+            OneLineIV_Encrypt.Text = "";
         }
 
         private void Delete_Button_Decrypt_Click(object sender, RoutedEventArgs e)
         {
             Decrypt_Text.Text = "";
             OneLineKey_Decrypt.Text = "";
+            OneLineIV_Decrypt.Text = "";
         }
 
         private void Type_of_crypt_DropDownClosed(object sender, EventArgs e)
@@ -358,6 +478,22 @@ namespace CryptingProgram
                 OneLineKey_Encrypt.Height = 23;
                 OneLineKey_Decrypt.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
                 OneLineKey_Encrypt.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
+            }
+            if(Type_of_crypt.SelectedIndex == 7)
+            {
+                Type_of_DES.Visibility = Visibility.Visible;
+                IV_Decrypt.Visibility = Visibility.Visible;
+                IV_Encrypt.Visibility = Visibility.Visible;
+                OneLineIV_Decrypt.Visibility = Visibility.Visible;
+                OneLineIV_Encrypt.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                Type_of_DES.Visibility = Visibility.Hidden;
+                IV_Decrypt.Visibility = Visibility.Hidden;
+                IV_Encrypt.Visibility = Visibility.Hidden;
+                OneLineIV_Decrypt.Visibility = Visibility.Hidden;
+                OneLineIV_Encrypt.Visibility = Visibility.Hidden;
             }
         }
     }

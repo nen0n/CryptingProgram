@@ -17,6 +17,9 @@
         <TextBlock Name="Encrypt" HorizontalAlignment="Left" Margin="10,49,0,0" TextWrapping="Wrap" Text="Encrypt" VerticalAlignment="Top" FontSize="14" Background="Black" Foreground="White" FontFamily="Courier New"/>
         <TextBlock HorizontalAlignment="Left" Margin="208,210,0,0" TextWrapping="Wrap" Text="Key" VerticalAlignment="Top" Height="22" Width="42" FontSize="14" Background="Black" Foreground="White" FontFamily="Courier New" TextAlignment="Center"/>
         <TextBox Name="OneLineKey_Encrypt" HorizontalAlignment="Left" Height="23" Margin="274,210,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="127" Background="Black" Foreground="White" FontFamily="Courier New" FontSize="14" AcceptsReturn="True" HorizontalScrollBarVisibility="Visible" />
+        <TextBlock Name="IV_Encrypt" HorizontalAlignment="Left" Margin="208,246,0,0" TextWrapping="Wrap" Text="IV" VerticalAlignment="Top" Height="22" Width="42" FontSize="14" Background="Black" Foreground="White" FontFamily="Courier New" TextAlignment="Center" Visibility="Hidden"/>
+        <TextBox Name="OneLineIV_Encrypt" HorizontalAlignment="Left" Height="23" Margin="274,246,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="127" Background="Black" Foreground="White" FontFamily="Courier New" FontSize="14" AcceptsReturn="True" HorizontalScrollBarVisibility="Visible" Visibility="Hidden" />
+
         <ComboBox Name="Type_of_crypt" HorizontalAlignment="Left" Margin="75,0,0,0" VerticalAlignment="Top" Width="193" Height="22" SelectedIndex="0" Background="Black" FontFamily="Courier New" FontSize="14" DropDownClosed="Type_of_crypt_DropDownClosed">
             <ComboBoxItem Content="Type of crypt"/>
             <ComboBoxItem Content="Crypt of Caesar"/>
@@ -25,6 +28,13 @@
             <ComboBoxItem Content="Crypt of Tritemius Slogan"/>
             <ComboBoxItem Content="XOR crypt"/>
             <ComboBoxItem Content="Book crypt"/>
+            <ComboBoxItem Content="DES"/>
+        </ComboBox>
+        <ComboBox Name="Type_of_DES" Height="22" SelectedIndex="0" Background="Black" FontFamily="Courier New" FontSize="14" HorizontalAlignment="Left" Margin="268,0,0,0" VerticalAlignment="Top" Width="120" Visibility="Hidden">
+            <ComboBoxItem Content="Type of DES"/>
+            <ComboBoxItem Content="CBC"/>
+            <ComboBoxItem Content="CFB"/>
+            <ComboBoxItem Content="ECB"/>
         </ComboBox>
         <Button Name ="Random_Key_Encrypt" Content="Random key" HorizontalAlignment="Left" Margin="10,210,0,0" VerticalAlignment="Top" Width="193" Height="23" Click="Random_Key_Encrypt_Click" Background="Black" Foreground="White" FontFamily="Courier New" FontSize="14"/>
         <Button Name="Open_Encrypt_Button" Content="Open file" HorizontalAlignment="Left" Height="22" Margin="414,210,0,0" VerticalAlignment="Top" Width="85" Click="Open_Encrypt_Button_Click" Background="Black" Foreground="White" FontFamily="Courier New" FontSize="14"/>
@@ -39,6 +49,8 @@
         <TextBlock HorizontalAlignment="Left" Margin="208,467,0,0" TextWrapping="Wrap" Text="Key" VerticalAlignment="Top" Height="22" Width="42" FontSize="14" Background="Black" Foreground="White" FontFamily="Courier New" TextAlignment="Center"/>
         <TextBox x:Name="OneLineKey_Decrypt" HorizontalAlignment="Left" Height="23" Margin="274,467,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="127" Background="Black" Foreground="White" FontFamily="Courier New" FontSize="14" AcceptsReturn="True" HorizontalScrollBarVisibility="Auto" />
         <Button x:Name="Open_Decrypt_Button" Content="Open file" HorizontalAlignment="Left" Height="22" Margin="414,468,0,0" VerticalAlignment="Top" Width="85" Click="Open_Decrypt_Button_Click" Background="Black" Foreground="White" FontFamily="Courier New" FontSize="14"/>
+        <TextBlock Name="IV_Decrypt" HorizontalAlignment="Left" Margin="208,502,0,0" TextWrapping="Wrap" Text="IV" VerticalAlignment="Top" Height="22" Width="42" FontSize="14" Background="Black" Foreground="White" FontFamily="Courier New" TextAlignment="Center" Visibility="Hidden"/>
+        <TextBox Name="OneLineIV_Decrypt" HorizontalAlignment="Left" Height="23" Margin="274,502,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="127" Background="Black" Foreground="White" FontFamily="Courier New" FontSize="14" AcceptsReturn="True" HorizontalScrollBarVisibility="Visible" Visibility="Hidden" />
         <Button x:Name="Save_Decrypt_Button" Content="Save file" HorizontalAlignment="Left" Height="22" Margin="504,468,0,0" VerticalAlignment="Top" Width="87" Click="Save_Decrypt_Button_Click" Background="Black" Foreground="White" FontFamily="Courier New" FontSize="14"/>
         <Button x:Name="Decrypt_Button" Content="Decrypt" HorizontalAlignment="Left" Height="22" Margin="724,468,0,0" VerticalAlignment="Top" Width="124" Click="Decrypt_Button_Click" Background="Black" Foreground="White" FontFamily="Courier New" FontSize="14"/>
         <Button Name ="Copy_Button_Decrypt" Content="Copy" HorizontalAlignment="Left" Margin="414,502,0,0" VerticalAlignment="Top" Width="85" Height="23" Click="Copy_Button_Decrypt_Click" Background="Black" Foreground="White" FontFamily="Courier New" FontSize="14"/>
