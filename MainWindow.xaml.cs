@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 
 namespace CryptingProgram
 {
@@ -36,6 +37,17 @@ namespace CryptingProgram
             info.Show();
         }
 
+        private BigInteger[] arrayParser(string input)
+        {
+            BigInteger[] array = new BigInteger[input.Split(',').Length];
+            string[] numbers = input.Split(',');
+            for(int i = 0; i < numbers.Length; i++)
+            {
+                array[i] = new BigInteger(Int64.Parse(numbers[i]));
+            }
+            return array;
+        }
+
         private bool Error_Encrypt()
         {
             if (Type_of_crypt.SelectedIndex == 0)
@@ -43,7 +55,7 @@ namespace CryptingProgram
                 MessageBox.Show("No encryption type selected.");
                 return false;
             }
-            if (OneLineKey_Encrypt.Text == "")
+            if (OneLineKey_Encrypt.Text == "" && Type_of_crypt.SelectedIndex != 8)
             {
                 MessageBox.Show("No encryption key entered.");
                 return false;
@@ -76,7 +88,7 @@ namespace CryptingProgram
                 }
                 catch
                 {
-                    MessageBox.Show("The verse was written incorrectly");
+                    MessageBox.Show("The verse was written incorrectly.");
                     return false;
                 }
             }
@@ -114,6 +126,33 @@ namespace CryptingProgram
                     return false;
                 }
             }
+            if(Type_of_crypt.SelectedIndex == 8)
+            {
+                if(N_Knap.Text =="")
+                {
+                    MessageBox.Show("No length entered.");
+                    return false;
+                }
+                if(Open_Knap_Encrypt.Text == "")
+                {
+                    MessageBox.Show("No opened key entered.");
+                    return false;
+                }
+                if(!int.TryParse(N_Knap.Text, out int i))
+                {
+                    MessageBox.Show("Length isn`t a number");
+                }
+                try
+                {
+                    Knapsack knapsack = new Knapsack(int.Parse(N_Knap.Text));
+                    Knapsack.encrypt(Encrypt.Text, arrayParser(Open_Knap_Encrypt.Text));
+                }
+                catch
+                {
+                    MessageBox.Show("Open key is broken!\n");
+                    return false;
+                }
+            }
             return true;
         }
 
@@ -124,7 +163,7 @@ namespace CryptingProgram
                 MessageBox.Show("No encryption type selected.");
                 return false;
             }
-            if (OneLineKey_Decrypt.Text == "")
+            if (OneLineKey_Decrypt.Text == "" && Type_of_crypt.SelectedIndex != 8)
             {
                 MessageBox.Show("No encryption key entered.");
                 return false;
@@ -194,6 +233,41 @@ namespace CryptingProgram
                     return false;
                 }
             }
+            if (Type_of_crypt.SelectedIndex == 8)
+            {
+                if (T_Knap_Decrypt.Text == "")
+                {
+                    MessageBox.Show("No T entered.");
+                    return false;
+                }
+                if (M_Knap_Decrypt.Text == "")
+                {
+                    MessageBox.Show("No M entered.");
+                    return false;
+                }
+                if (Closed_Knap_Decrypt.Text == "")
+                {
+                    MessageBox.Show("No closed key entered.");
+                    return false;
+                }
+                if (!BigInteger.TryParse(T_Knap_Decrypt.Text, out BigInteger i))
+                {
+                    MessageBox.Show("T isn`t a number");
+                }
+                if (!BigInteger.TryParse(M_Knap_Decrypt.Text, out BigInteger j))
+                {
+                    MessageBox.Show("M isn`t a number");
+                }
+                try
+                {
+                    Knapsack.decrypt(Decrypt_Text.Text, arrayParser(Closed_Knap_Decrypt.Text), BigInteger.Parse(M_Knap_Decrypt.Text), BigInteger.Parse(T_Knap_Decrypt.Text));
+                }
+                catch
+                {
+                    MessageBox.Show("Closed key is broken!\n");
+                    return false;
+                }
+            }
             return true;
         }
 
@@ -234,6 +308,9 @@ namespace CryptingProgram
                                 Decrypt_Text.Text = des.CryptText(Crypting.Crypt.Encrypt, System.Security.Cryptography.CipherMode.ECB, Encrypt_Text.Text, OneLineKey_Encrypt.Text, OneLineIV_Encrypt.Text);
                                 break;
                         }
+                        break;
+                    case 8:
+                        Decrypt_Text.Text = Knapsack.encrypt(Encrypt_Text.Text, arrayParser(Open_Knap_Encrypt.Text));
                         break;
                 }
             }
@@ -276,6 +353,9 @@ namespace CryptingProgram
                                 Encrypt_Text.Text = des.CryptText(Crypting.Crypt.Decrypt, System.Security.Cryptography.CipherMode.ECB, Decrypt_Text.Text, OneLineKey_Decrypt.Text, OneLineIV_Decrypt.Text);
                                 break;
                         }
+                        break;
+                    case 8:
+                        Encrypt_Text.Text = Knapsack.decrypt(Decrypt_Text.Text, arrayParser(Closed_Knap_Decrypt.Text), BigInteger.Parse(M_Knap_Decrypt.Text), BigInteger.Parse(T_Knap_Decrypt.Text));
                         break;
                 }
             }
@@ -342,7 +422,21 @@ namespace CryptingProgram
                         }
                     }
                     break;
-            }
+                case 8:
+                    try
+                    {
+                        Knapsack knapsack = new Knapsack(int.Parse(N_Knap.Text));
+                        Open_Knap_Encrypt.Text = string.Join(",", knapsack.openKey);
+                        T_Knap_Encrypt.Text = knapsack.t.ToString();
+                        M_Knap_Encrypt.Text = knapsack.m.ToString();
+                        Closed_Knap_Encrypt.Text = string.Join(",", knapsack.closedKey);
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Length isn`t a number");
+                    }
+                    break;
+                    }
         }
 
         private void Open_Encrypt_Button_Click(object sender, RoutedEventArgs e)
@@ -434,8 +528,48 @@ namespace CryptingProgram
             Decrypt_Button.Margin = thickness;
 
             thickness = OneLineIV_Decrypt.Margin;
-            OneLineKey_Decrypt.Margin = OneLineKey_Encrypt.Margin;
+            OneLineIV_Decrypt.Margin = OneLineIV_Encrypt.Margin;
             OneLineIV_Encrypt.Margin = thickness;
+
+            thickness = N_Encrypt.Margin;
+            N_Encrypt.Margin = T_Decrypt.Margin;
+            T_Decrypt.Margin = thickness;
+
+            thickness = N_Knap.Margin;
+            N_Knap.Margin = T_Knap_Decrypt.Margin;
+            T_Knap_Decrypt.Margin = thickness;
+
+            thickness = Open_Encrypt.Margin;
+            Open_Encrypt.Margin = M_Decrypt.Margin;
+            M_Decrypt.Margin = thickness;
+
+            thickness = Open_Knap_Encrypt.Margin;
+            Open_Knap_Encrypt.Margin = M_Knap_Decrypt.Margin;
+            M_Knap_Decrypt.Margin = thickness;
+
+            thickness = T_Knap_Encrypt.Margin;
+            T_Knap_Encrypt.Margin = Closed_Knap_Decrypt.Margin;
+            Closed_Knap_Decrypt.Margin = thickness;
+
+            thickness = T_Encrypt.Margin;
+            T_Encrypt.Margin = Closed_Decrypt.Margin;
+            Closed_Decrypt.Margin = thickness;
+
+            thickness = M_Encrypt.Margin;
+            M_Encrypt.Margin = M_Encrypt_Copy.Margin;
+            M_Encrypt_Copy.Margin = thickness;
+
+            thickness = M_Knap_Encrypt.Margin;
+            M_Knap_Encrypt.Margin = M_Knap_Encrypt_Copy.Margin;
+            M_Knap_Encrypt_Copy.Margin = thickness;
+
+            thickness = Closed_Knap_Encrypt.Margin;
+            Closed_Knap_Encrypt.Margin = Closed_Knap_Encrypt_Copy.Margin;
+            Closed_Knap_Encrypt_Copy.Margin = thickness;
+
+            thickness = Closed_Encrypt.Margin;
+            Closed_Encrypt.Margin = Closed_Encrypt_Copy.Margin;
+            Closed_Encrypt_Copy.Margin = thickness;
         }
 
         private void Copy_Button_Decrypt_Click(object sender, RoutedEventArgs e)
@@ -453,6 +587,11 @@ namespace CryptingProgram
             Encrypt_Text.Text = "";
             OneLineKey_Encrypt.Text = "";
             OneLineIV_Encrypt.Text = "";
+            T_Knap_Encrypt.Text = "";
+            M_Knap_Encrypt.Text = "";
+            Open_Knap_Encrypt.Text = "";
+            Closed_Knap_Encrypt.Text = "";
+            N_Knap.Text = "";
         }
 
         private void Delete_Button_Decrypt_Click(object sender, RoutedEventArgs e)
@@ -460,6 +599,9 @@ namespace CryptingProgram
             Decrypt_Text.Text = "";
             OneLineKey_Decrypt.Text = "";
             OneLineIV_Decrypt.Text = "";
+            T_Knap_Decrypt.Text = "";
+            M_Knap_Decrypt.Text = "";
+            Closed_Knap_Decrypt.Text = "";
         }
 
         private void Type_of_crypt_DropDownClosed(object sender, EventArgs e)
@@ -494,6 +636,58 @@ namespace CryptingProgram
                 IV_Encrypt.Visibility = Visibility.Hidden;
                 OneLineIV_Decrypt.Visibility = Visibility.Hidden;
                 OneLineIV_Encrypt.Visibility = Visibility.Hidden;
+            }
+            if(Type_of_crypt.SelectedIndex == 8)
+            {
+                N_Encrypt.Visibility = Visibility.Visible;
+                N_Knap.Visibility = Visibility.Visible;
+                T_Decrypt.Visibility = Visibility.Visible;
+                T_Encrypt.Visibility = Visibility.Visible;
+                T_Knap_Decrypt.Visibility = Visibility.Visible;
+                T_Knap_Encrypt.Visibility = Visibility.Visible;
+                M_Decrypt.Visibility = Visibility.Visible;
+                M_Encrypt.Visibility = Visibility.Visible;
+                M_Knap_Decrypt.Visibility = Visibility.Visible;
+                M_Knap_Encrypt.Visibility = Visibility.Visible;
+                Open_Knap_Encrypt.Visibility = Visibility.Visible;
+                Open_Encrypt.Visibility = Visibility.Visible;
+                Closed_Knap_Decrypt.Visibility = Visibility.Visible;
+                Closed_Knap_Encrypt.Visibility = Visibility.Visible;
+                Closed_Decrypt.Visibility = Visibility.Visible;
+                Closed_Encrypt.Visibility = Visibility.Visible;
+
+                Key_Encrypt.Visibility = Visibility.Hidden;
+                Key_Decrypt.Visibility = Visibility.Hidden;
+                OneLineKey_Decrypt.Visibility = Visibility.Hidden;
+                OneLineKey_Encrypt.Visibility = Visibility.Hidden;
+
+                Random_Key_Encrypt.Content = "Random Open Key";
+            }
+            else
+            {
+                Key_Encrypt.Visibility = Visibility.Visible;
+                Key_Decrypt.Visibility = Visibility.Visible;
+                OneLineKey_Decrypt.Visibility = Visibility.Visible;
+                OneLineKey_Encrypt.Visibility = Visibility.Visible;
+
+                N_Encrypt.Visibility = Visibility.Hidden;
+                N_Knap.Visibility = Visibility.Hidden;
+                T_Decrypt.Visibility = Visibility.Hidden;
+                T_Encrypt.Visibility = Visibility.Hidden;
+                T_Knap_Decrypt.Visibility = Visibility.Hidden;
+                T_Knap_Encrypt.Visibility = Visibility.Hidden;
+                M_Decrypt.Visibility = Visibility.Hidden;
+                M_Encrypt.Visibility = Visibility.Hidden;
+                M_Knap_Decrypt.Visibility = Visibility.Hidden;
+                M_Knap_Encrypt.Visibility = Visibility.Hidden;
+                Open_Knap_Encrypt.Visibility = Visibility.Hidden;
+                Open_Encrypt.Visibility = Visibility.Hidden;
+                Closed_Knap_Decrypt.Visibility = Visibility.Hidden;
+                Closed_Knap_Encrypt.Visibility = Visibility.Hidden;
+                Closed_Decrypt.Visibility = Visibility.Hidden;
+                Closed_Encrypt.Visibility = Visibility.Hidden;
+
+                Random_Key_Encrypt.Content = "Random Key";
             }
         }
     }
