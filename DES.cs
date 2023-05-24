@@ -20,6 +20,7 @@ namespace CryptingProgram
             if (crypt == Crypting.Crypt.Encrypt)
             {
                 FileStream stream = new FileStream(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\DES.txt", FileMode.OpenOrCreate, FileAccess.Write);
+                stream.SetLength(0);
                 CryptoStream crStream = new CryptoStream(stream, cryptic.CreateEncryptor(), CryptoStreamMode.Write);
                 byte[] data = UnicodeEncoding.Unicode.GetBytes(inputText);
                 crStream.Write(data, 0, data.Length);
