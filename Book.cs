@@ -16,7 +16,7 @@ namespace CryptingProgram
         {
             string outputText = "";
             inputText = inputText.ToLower();
-            var matrixOfVerse = MatrixGenerator(key);
+            var matrixOfVerse =  MatrixGenerator(key);
             if (crypt == Crypt.Encrypt)
             {
                 if (ContainLetter(inputText, matrixOfVerse))

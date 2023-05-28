@@ -26,6 +26,7 @@ namespace CryptingProgram
         private XOR xor = new XOR();
         private Book book = new Book();
         private DES des = new DES();
+        private RSA rsa = new RSA();
         public MainWindow()
         {
             InitializeComponent();
@@ -55,7 +56,7 @@ namespace CryptingProgram
                 MessageBox.Show("No encryption type selected.");
                 return false;
             }
-            if (OneLineKey_Encrypt.Text == "" && Type_of_crypt.SelectedIndex != 8)
+            if (OneLineKey_Encrypt.Text == "" && Type_of_crypt.SelectedIndex < 8)
             {
                 MessageBox.Show("No encryption key entered.");
                 return false;
@@ -153,6 +154,23 @@ namespace CryptingProgram
                     return false;
                 }
             }
+            if(Type_of_crypt.SelectedIndex == 9)
+            {
+                if(PublicKey_RSA_Encrypt.Text == "")
+                {
+                    MessageBox.Show("No public key entered.");
+                    return false;
+                }
+                try
+                {
+                    RSA.encrypt(Encrypt_Text.Text, PublicKey_RSA_Encrypt.Text);
+                }
+                catch
+                {
+                    MessageBox.Show("Public key is broken!\n");
+                    return false;
+                }
+            }
             return true;
         }
 
@@ -163,7 +181,7 @@ namespace CryptingProgram
                 MessageBox.Show("No encryption type selected.");
                 return false;
             }
-            if (OneLineKey_Decrypt.Text == "" && Type_of_crypt.SelectedIndex != 8)
+            if (OneLineKey_Decrypt.Text == "" && Type_of_crypt.SelectedIndex < 8)
             {
                 MessageBox.Show("No encryption key entered.");
                 return false;
@@ -268,6 +286,23 @@ namespace CryptingProgram
                     return false;
                 }
             }
+            if (Type_of_crypt.SelectedIndex == 9)
+            {
+                if (PrivateKey_RSA_Decrypt.Text == "")
+                {
+                    MessageBox.Show("No private key entered.");
+                    return false;
+                }
+                try
+                {
+                    RSA.decrypt(Decrypt_Text.Text, PrivateKey_RSA_Decrypt.Text);
+                }
+                catch
+                {
+                    MessageBox.Show("Private key is broken!\n");
+                    return false;
+                }
+            }
             return true;
         }
 
@@ -311,6 +346,9 @@ namespace CryptingProgram
                         break;
                     case 8:
                         Decrypt_Text.Text = Knapsack.encrypt(Encrypt_Text.Text, arrayParser(Open_Knap_Encrypt.Text));
+                        break;
+                    case 9:
+                        Decrypt_Text.Text = RSA.encrypt(Encrypt_Text.Text, PublicKey_RSA_Encrypt.Text);
                         break;
                 }
             }
@@ -357,6 +395,9 @@ namespace CryptingProgram
                     case 8:
                         Encrypt_Text.Text = Knapsack.decrypt(Decrypt_Text.Text, arrayParser(Closed_Knap_Decrypt.Text), BigInteger.Parse(M_Knap_Decrypt.Text), BigInteger.Parse(T_Knap_Decrypt.Text));
                         break;
+                    case 9:
+                        Encrypt_Text.Text = RSA.decrypt(Decrypt_Text.Text, PrivateKey_RSA_Decrypt.Text);
+                        break;
                 }
             }
         }
@@ -393,18 +434,18 @@ namespace CryptingProgram
                 case 6:
                     Random random = new Random();
                     var rand = random.Next(3);
-                    if(rand == 0)
+                    if (rand == 0)
                     {
                         OneLineKey_Encrypt.Text = File.ReadAllText(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\VerseFirst.txt");
                     }
-                    if(rand == 1)
+                    if (rand == 1)
                     {
                         OneLineKey_Encrypt.Text = File.ReadAllText(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\VerseSecond.txt");
                     }
-                    if(rand == 2)
+                    if (rand == 2)
                     {
                         OneLineKey_Encrypt.Text = File.ReadAllText(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\VerseThird.txt");
-                    }    
+                    }
                     break;
                 case 7:
                     {
@@ -436,7 +477,13 @@ namespace CryptingProgram
                         MessageBox.Show("Length isn`t a number");
                     }
                     break;
-                    }
+
+                case 9:
+                    rsa = new RSA();
+                    PublicKey_RSA_Encrypt.Text = rsa.publicKey;
+                    PrivateKey_RSA_Encrypt.Text = rsa.privateKey;
+                    break;
+            }
         }
 
         private void Open_Encrypt_Button_Click(object sender, RoutedEventArgs e)
@@ -570,6 +617,22 @@ namespace CryptingProgram
             thickness = Closed_Encrypt.Margin;
             Closed_Encrypt.Margin = Closed_Encrypt_Copy.Margin;
             Closed_Encrypt_Copy.Margin = thickness;
+
+            thickness = PbKey_RSA_Decrypt.Margin;
+            PbKey_RSA_Decrypt.Margin = PbKey_RSA_Encrypt.Margin;
+            PbKey_RSA_Encrypt.Margin = thickness;
+
+            thickness = PrKey_RSA_Decrypt.Margin;
+            PrKey_RSA_Decrypt.Margin = PrKey_RSA_Encrypt.Margin;
+            PrKey_RSA_Encrypt.Margin = thickness;
+
+            thickness = PrivateKey_RSA_Decrypt.Margin;
+            PrivateKey_RSA_Decrypt.Margin = PrivateKey_RSA_Encrypt.Margin;
+            PrivateKey_RSA_Encrypt.Margin = thickness;
+
+            thickness = PublicKey_RSA_Decrypt.Margin;
+            PublicKey_RSA_Decrypt.Margin = PublicKey_RSA_Encrypt.Margin;
+            PublicKey_RSA_Encrypt.Margin = thickness;
         }
 
         private void Copy_Button_Decrypt_Click(object sender, RoutedEventArgs e)
@@ -592,6 +655,8 @@ namespace CryptingProgram
             Open_Knap_Encrypt.Text = "";
             Closed_Knap_Encrypt.Text = "";
             N_Knap.Text = "";
+            PublicKey_RSA_Encrypt.Text = "";
+            PrivateKey_RSA_Encrypt.Text = "";
         }
 
         private void Delete_Button_Decrypt_Click(object sender, RoutedEventArgs e)
@@ -602,6 +667,8 @@ namespace CryptingProgram
             T_Knap_Decrypt.Text = "";
             M_Knap_Decrypt.Text = "";
             Closed_Knap_Decrypt.Text = "";
+            PublicKey_RSA_Decrypt.Text = "";
+            PrivateKey_RSA_Decrypt.Text = "";
         }
 
         private void Type_of_crypt_DropDownClosed(object sender, EventArgs e)
@@ -686,6 +753,38 @@ namespace CryptingProgram
                 Closed_Knap_Encrypt.Visibility = Visibility.Hidden;
                 Closed_Decrypt.Visibility = Visibility.Hidden;
                 Closed_Encrypt.Visibility = Visibility.Hidden;
+
+                Random_Key_Encrypt.Content = "Random Key";
+            }
+            if(Type_of_crypt.SelectedIndex == 9)
+            {
+                PublicKey_RSA_Encrypt.Visibility = Visibility.Visible;
+                PrivateKey_RSA_Decrypt.Visibility = Visibility.Visible;
+                PrivateKey_RSA_Encrypt.Visibility = Visibility.Visible;
+                PrKey_RSA_Decrypt.Visibility = Visibility.Visible;
+                PrKey_RSA_Encrypt.Visibility = Visibility.Visible;
+                PbKey_RSA_Encrypt.Visibility = Visibility.Visible;
+
+                Key_Encrypt.Visibility = Visibility.Hidden;
+                Key_Decrypt.Visibility = Visibility.Hidden;
+                OneLineKey_Decrypt.Visibility = Visibility.Hidden;
+                OneLineKey_Encrypt.Visibility = Visibility.Hidden;
+
+                Random_Key_Encrypt.Content = "Generate public key";
+            }
+            else
+            {
+                PublicKey_RSA_Encrypt.Visibility = Visibility.Hidden;
+                PrivateKey_RSA_Decrypt.Visibility = Visibility.Hidden;
+                PrivateKey_RSA_Encrypt.Visibility = Visibility.Hidden;
+                PrKey_RSA_Decrypt.Visibility = Visibility.Hidden;
+                PrKey_RSA_Encrypt.Visibility = Visibility.Hidden;
+                PbKey_RSA_Encrypt.Visibility = Visibility.Hidden;
+
+                Key_Encrypt.Visibility = Visibility.Visible;
+                Key_Decrypt.Visibility = Visibility.Visible;
+                OneLineKey_Decrypt.Visibility = Visibility.Visible;
+                OneLineKey_Encrypt.Visibility = Visibility.Visible;
 
                 Random_Key_Encrypt.Content = "Random Key";
             }

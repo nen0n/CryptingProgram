@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CryptingProgram"
         mc:Ignorable="d"
-        Title="Шифрувальна програма" Height="622.4" Width="865.2">
-    <Grid Background="Black" Margin="0,0,0.2,-0.2">
+        Title="Шифрувальна програма" Height="661.6" Width="865.2">
+    <Grid Background="Black">
         <TextBlock x:Name ="T_Decrypt" HorizontalAlignment="Left" Margin="184,471,0,0" TextWrapping="Wrap" Text="T" VerticalAlignment="Top"  FontSize="14" Background="Black" Foreground="White" FontFamily="Courier New" Width="84" TextAlignment="Right" Visibility="Hidden"/>
         <TextBlock x:Name ="N_Encrypt" HorizontalAlignment="Left" Margin="184,213,0,0" TextWrapping="Wrap" Text="N" VerticalAlignment="Top"  FontSize="14" Background="Black" Foreground="White" FontFamily="Courier New" Width="84" TextAlignment="Right" Visibility="Hidden"/>
         <TextBox x:Name ="Encrypt_Text" HorizontalAlignment="Left" Height="135" Margin="10,70,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="838" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -17,7 +17,7 @@
             </Button.LayoutTransform>
         </Button>
         <TextBlock x:Name="Encrypt" HorizontalAlignment="Left" Margin="10,49,0,0" TextWrapping="Wrap" Text="Encrypt" VerticalAlignment="Top" FontSize="14" Background="Black" Foreground="White" FontFamily="Courier New"/>
-        <TextBlock x:Name="Key_Encrypt" HorizontalAlignment="Left" Margin="208,210,0,0" TextWrapping="Wrap" Text="Key" VerticalAlignment="Top" Height="22" Width="42" FontSize="14" Background="Black" Foreground="White" FontFamily="Courier New" TextAlignment="Center"/>
+        <TextBlock x:Name="Key_Encrypt" HorizontalAlignment="Left" Margin="216,214,0,0" TextWrapping="Wrap" Text="Key" VerticalAlignment="Top" Height="22" Width="42" FontSize="14" Background="Black" Foreground="White" FontFamily="Courier New" TextAlignment="Center"/>
         <TextBox x:Name="OneLineKey_Encrypt" HorizontalAlignment="Left" Height="23" Margin="274,210,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="127" Background="Black" Foreground="White" FontFamily="Courier New" FontSize="14" AcceptsReturn="True" HorizontalScrollBarVisibility="Visible" />
         <TextBlock x:Name="IV_Encrypt" HorizontalAlignment="Left" Margin="208,246,0,0" TextWrapping="Wrap" Text="IV" VerticalAlignment="Top" Height="22" Width="42" FontSize="14" Background="Black" Foreground="White" FontFamily="Courier New" TextAlignment="Center" Visibility="Hidden"/>
         <TextBox x:Name="OneLineIV_Encrypt" HorizontalAlignment="Left" Height="23" Margin="274,246,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="127" Background="Black" Foreground="White" FontFamily="Courier New" FontSize="14" AcceptsReturn="True" HorizontalScrollBarVisibility="Visible" Visibility="Hidden" />
@@ -32,6 +32,7 @@
             <ComboBoxItem Content="Book crypt"/>
             <ComboBoxItem Content="DES crypt"/>
             <ComboBoxItem Content="Knapsack crypt"/>
+            <ComboBoxItem Content="RSA crypt"/>
         </ComboBox>
         <ComboBox x:Name="Type_of_DES" Height="22" SelectedIndex="0" Background="Black" FontFamily="Courier New" FontSize="14" HorizontalAlignment="Left" Margin="268,0,0,0" VerticalAlignment="Top" Width="120" Visibility="Hidden">
             <ComboBoxItem Content="Type of DES"/>
@@ -49,7 +50,7 @@
         <TextBox x:Name ="Decrypt_Text" HorizontalAlignment="Left" Height="135" Margin="10,328,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="838" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
          ScrollViewer.VerticalScrollBarVisibility="Auto" Background="Black" Foreground="White" FontFamily="Courier New" FontSize="14"/>
         <TextBlock x:Name ="Decrypt" HorizontalAlignment="Left" Margin="10,307,0,0" TextWrapping="Wrap" Text="Decrypt" VerticalAlignment="Top" FontSize="14" Background="Black" Foreground="White" FontFamily="Courier New"/>
-        <TextBlock x:Name="Key_Decrypt" HorizontalAlignment="Left" Margin="208,467,0,0" TextWrapping="Wrap" Text="Key" VerticalAlignment="Top" Height="22" Width="42" FontSize="14" Background="Black" Foreground="White" FontFamily="Courier New" TextAlignment="Center"/>
+        <TextBlock x:Name="Key_Decrypt" HorizontalAlignment="Left" Margin="216,471,0,0" TextWrapping="Wrap" Text="Key" VerticalAlignment="Top" Height="22" Width="42" FontSize="14" Background="Black" Foreground="White" FontFamily="Courier New" TextAlignment="Center"/>
         <TextBox x:Name="OneLineKey_Decrypt" HorizontalAlignment="Left" Height="23" Margin="274,468,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="127" Background="Black" Foreground="White" FontFamily="Courier New" FontSize="14" AcceptsReturn="True" HorizontalScrollBarVisibility="Auto" />
         <Button x:Name="Open_Decrypt_Button" Content="Open file" HorizontalAlignment="Left" Height="23" Margin="414,468,0,0" VerticalAlignment="Top" Width="85" Click="Open_Decrypt_Button_Click" Background="Black" Foreground="White" FontFamily="Courier New" FontSize="14"/>
         <TextBlock x:Name="IV_Decrypt" HorizontalAlignment="Left" Margin="208,495,0,0" TextWrapping="Wrap" Text="IV" VerticalAlignment="Top" Height="22" Width="42" FontSize="14" Background="Black" Foreground="White" FontFamily="Courier New" TextAlignment="Center" Visibility="Hidden"/>
@@ -71,12 +72,21 @@
         <TextBlock x:Name ="Open_Encrypt" HorizontalAlignment="Left" Margin="184,241,0,0" TextWrapping="Wrap" Text="Open key" VerticalAlignment="Top"  FontSize="14" Background="Black" Foreground="White" FontFamily="Courier New" Width="84" TextAlignment="Right" Visibility="Hidden"/>
         <TextBlock x:Name ="T_Encrypt" HorizontalAlignment="Left" Margin="184,268,0,0" TextWrapping="Wrap" Text="T" VerticalAlignment="Top"  FontSize="14" Background="Black" Foreground="White" FontFamily="Courier New" Width="84" TextAlignment="Right" Visibility="Hidden"/>
         <TextBlock x:Name ="M_Encrypt" HorizontalAlignment="Left" Margin="431,268,0,0" TextWrapping="Wrap" Text="M" VerticalAlignment="Top"  FontSize="14" Background="Black" Foreground="White" FontFamily="Courier New" Visibility="Hidden"/>
-        <TextBlock x:Name ="Closed_Encrypt" HorizontalAlignment="Left" Margin="184,295,0,0" TextWrapping="Wrap" Text="Closed key" VerticalAlignment="Top"  FontSize="14" Background="Black" Foreground="White" FontFamily="Courier New"/>
+        <TextBlock x:Name ="Closed_Encrypt" HorizontalAlignment="Left" Margin="184,295,0,0" TextWrapping="Wrap" Text="Closed key" VerticalAlignment="Top"  FontSize="14" Background="Black" Foreground="White" FontFamily="Courier New" Visibility="Hidden"/>
         <TextBlock x:Name ="M_Decrypt" HorizontalAlignment="Left" Margin="184,499,0,0" TextWrapping="Wrap" Text="M" VerticalAlignment="Top"  FontSize="14" Background="Black" Foreground="White" FontFamily="Courier New" Width="84" TextAlignment="Right" Visibility="Hidden"/>
         <TextBlock x:Name ="Closed_Decrypt" HorizontalAlignment="Left" Margin="184,526,0,0" TextWrapping="Wrap" Text="Closed key" VerticalAlignment="Top"  FontSize="14" Background="Black" Foreground="White" FontFamily="Courier New" Visibility="Hidden"/>
         <TextBlock x:Name ="M_Encrypt_Copy" HorizontalAlignment="Left" Margin="431,526,0,0" TextWrapping="Wrap" Text="M" VerticalAlignment="Top"  FontSize="14" Background="Black" Foreground="White" FontFamily="Courier New" Visibility="Hidden"/>
         <TextBox x:Name="M_Knap_Encrypt_Copy" HorizontalAlignment="Left" Height="23" Margin="464,526,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="127" Background="Black" Foreground="White" FontFamily="Courier New" FontSize="14" AcceptsReturn="True" Visibility="Hidden"/>
         <TextBlock x:Name ="Closed_Encrypt_Copy" HorizontalAlignment="Left" Margin="184,553,0,0" TextWrapping="Wrap" Text="Closed key" VerticalAlignment="Top"  FontSize="14" Background="Black" Foreground="White" FontFamily="Courier New" Visibility="Hidden"/>
         <TextBox x:Name="Closed_Knap_Encrypt_Copy" HorizontalAlignment="Left" Height="23" Margin="274,553,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="317" Background="Black" Foreground="White" FontFamily="Courier New" FontSize="14" AcceptsReturn="True" Visibility="Hidden"/>
+        <TextBox x:Name="PrivateKey_RSA_Encrypt" HorizontalAlignment="Left" Height="39" Margin="275,281,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="316" Background="Black" Foreground="White" FontFamily="Courier New" FontSize="14" AcceptsReturn="True" HorizontalScrollBarVisibility="Visible" Visibility="Hidden" />
+        <TextBox x:Name="PublicKey_RSA_Encrypt" HorizontalAlignment="Left" Height="39" Margin="275,237,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="316" Background="Black" Foreground="White" FontFamily="Courier New" FontSize="14" AcceptsReturn="True" HorizontalScrollBarVisibility="Visible" Visibility="Hidden" />
+        <TextBox x:Name="PrivateKey_RSA_Decrypt" HorizontalAlignment="Left" Height="39" Margin="275,570,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="316" Background="Black" Foreground="White" FontFamily="Courier New" FontSize="14" AcceptsReturn="True" HorizontalScrollBarVisibility="Visible" Visibility="Hidden" />
+        <TextBox x:Name="PublicKey_RSA_Decrypt" HorizontalAlignment="Left" Height="39" Margin="275,526,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="316" Background="Black" Foreground="White" FontFamily="Courier New" FontSize="14" AcceptsReturn="True" HorizontalScrollBarVisibility="Visible" Visibility="Hidden" />
+        <TextBlock x:Name="PbKey_RSA_Encrypt" HorizontalAlignment="Left" Margin="182,247,0,0" TextWrapping="Wrap" Text="Public Key" VerticalAlignment="Top" FontSize="14" Background="Black" Foreground="White" FontFamily="Courier New" TextAlignment="Center" Visibility="Hidden"/>
+        <TextBlock Name ="PrKey_RSA_Encrypt" HorizontalAlignment="Left" Margin="174,291,0,0" TextWrapping="Wrap" Text="Private Key" VerticalAlignment="Top" FontSize="14" Background="Black" Foreground="White" FontFamily="Courier New" TextAlignment="Center" Visibility="Hidden"/>
+        <TextBlock x:Name="PbKey_RSA_Decrypt" HorizontalAlignment="Left" Margin="182,537,0,0" TextWrapping="Wrap" Text="Public Key" VerticalAlignment="Top" FontSize="14" Background="Black" Foreground="White" FontFamily="Courier New" TextAlignment="Center" Visibility="Hidden"/>
+        <TextBlock Name ="PrKey_RSA_Decrypt" HorizontalAlignment="Left" Margin="174,586,0,0" TextWrapping="Wrap" Text="Private Key" VerticalAlignment="Top" FontSize="14" Background="Black" Foreground="White" FontFamily="Courier New" TextAlignment="Center" Visibility="Hidden"/>
+
     </Grid>
 </Window>

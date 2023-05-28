@@ -65,6 +65,7 @@
       <DependentUpon>InfoWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Knapsack.cs" />
+    <Compile Include="RSA.cs" />
     <Compile Include="TritemiusLinear.cs" />
     <Compile Include="TritemiusNonlinear.cs" />
     <Compile Include="TritemiusSlogan.cs" />
