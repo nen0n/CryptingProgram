@@ -14,11 +14,11 @@
         <TextBlock x:Name ="InfoBlock" HorizontalAlignment="Center" Margin="10,10,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="135" Width="324" FontSize="20" TextAlignment="Center" Visibility="Visible" Grid.ColumnSpan="2" Foreground="White" Background="Black">
             <Run Text="Розробник"/>  
             <LineBreak/>
-            <Run Text="Студентка 2-го курсу"/>  
+            <Run Text="Студент 4-го курсу"/>  
             <LineBreak/>
-            <Run Text="Групи ТР-12"/>
+            <Run Text="Групи ТВ-11"/>
             <LineBreak/>
-            <Run Text="Ангеліна Забловська"/>
+            <Run Text="Здесенко Євгеній"/>
         </TextBlock>
     </Grid>
 </Window>
